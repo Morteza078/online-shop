@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from random_words import RandomWords
 from customer.models import Customer
@@ -11,6 +12,18 @@ from translated_fields import TranslatedField
 def random_string():
     word = RandomWords()
     return word.random_word() + word.random_word() + word.random_word()
+
+
+class DiscountCode(models.Model):
+    code = models.CharField(max_length=100, unique=True, default=random_string)
+    valid_from = models.DateTimeField()
+    valid_to = models.DateTimeField()
+    active = models.BooleanField()
+    discount = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
+    owner = models.ForeignKey(Customer, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.code
 
 
 class OrderItem(models.Model):
@@ -51,5 +64,6 @@ class OrderHistory(models.Model):
     ordered_date = models.DateTimeField()
     status = models.CharField(max_length=50)
     total_price = models.PositiveIntegerField()
+
     class Meta:
-        verbose_name_plural='OrderHistories'
+        verbose_name_plural = 'OrderHistories'

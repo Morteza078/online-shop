@@ -1,34 +1,30 @@
-from django.contrib.auth.models import User
-from django.core.validators import MinValueValidator, MaxValueValidator
-from random_words import RandomWords
+from django.contrib.auth.base_user import BaseUserManager
+from django.contrib.auth.models import User, AbstractUser
 from django.db import models
 from translated_fields import TranslatedField
 
 
 # Create your models here.
-def random_string():
-    word = RandomWords()
-    return word.random_word() + word.random_word() + word.random_word()
 
 
-class Customer(User):
-    pass
+class CustomUser(AbstractUser):
+    image = models.ImageField(upload_to='', null=True, blank=True)
+    is_active = models.BooleanField(default=True)
 
-    # user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+class Customer(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+
     class Meta:
         verbose_name_plural = 'Customers'
 
 
-class DiscountCode(models.Model):
-    code = models.CharField(max_length=100, unique=True, default=random_string)
-    valid_from = models.DateTimeField()
-    valid_to = models.DateTimeField()
-    active = models.BooleanField()
-    discount = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
-    owner = models.ForeignKey(Customer, on_delete=models.CASCADE)
+class Staff(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.code
+    # def create_staff(self, username, email=None, password=None, **extra_fields):
+    #     extra_fields.setdefault('is_staff', True)
+    #     extra_fields.setdefault('is_superuser', False)
 
 
 class Address(models.Model):
