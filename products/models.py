@@ -25,5 +25,5 @@ class Product(models.Model):
     price = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    images = models.ManyToManyField(ProductImage, related_name='images', null=True, blank=True)
+    images = models.ManyToManyField(ProductImage, related_name='images',)
     inventory = models.PositiveIntegerField(default=0)
