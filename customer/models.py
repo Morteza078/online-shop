@@ -10,6 +10,7 @@ from translated_fields import TranslatedField
 class CustomUser(AbstractUser):
     image = models.ImageField(upload_to='', null=True, blank=True)
     is_active = models.BooleanField(default=True)
+    amount_of_shopings = models.PositiveIntegerField(default=0)
 
 
 class Customer(models.Model):
