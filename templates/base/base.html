@@ -84,7 +84,7 @@
                     </ul>
                 </div>
             {% else %}
-                <form action="{% url 'customer:auth' %}">
+                <form action="{% url 'customer:login' %}">
                     <input class="btn btn-outline-dark m-1" type="submit" value="{% translate 'Login' %}"/>
                 </form>
             {% endif %}
