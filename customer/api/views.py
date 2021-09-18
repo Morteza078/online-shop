@@ -26,54 +26,6 @@ class RegisterAPIView(generics.ListCreateAPIView):
     # permission_classes = [IsAdminUser]
 
 
-# @api_view(['GET', 'POST'])
-# def customer_register(request):
-#     """
-#     List all code snippets, or create a new snippet.
-#     """
-#     if request.method == 'GET':
-#         customers = Customer.objects.all()
-#         print('in get----------------------')
-#         serializer = CustomerRegisterSerializer(customers, many=True)
-#         return Response(serializer.data)
-#
-#     elif request.method == 'POST':
-#         # print(request.data)
-#         # print(dict(request.data))
-#         # print(request.data.dict())
-#         serializer = CustomerRegisterSerializer(data=request.data)
-#         # print(serializer)
-#         if serializer.is_valid():
-#             serializer.save()
-#             print(serializer)
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         print(serializer.errors)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# @api_view(['GET', 'POST'])
-# def customer_list(request):
-#     """
-#     List all code customers , or create a new customer.
-#     """
-#     if request.method == 'GET':
-#         customers = Customer.objects.all()
-#         serializer = CustomerRegisterSerializer(customers, many=True)
-#         return Response(serializer.data)
-#
-#     elif request.method == 'POST':
-#         form = CustomerRegisterForm(request.POST, request.FILES)
-#             serializer = CustomerRegisterSerializer(data=request.data)
-#             if serializer.is_valid():
-#                 serializer.save()
-#                 print(form.cleaned_data['username'])
-#                 print(auth(request, Customer.objects.get(username=form.cleaned_data['username'])))
-#                 return redirect('products:index')
-#             return render(request, 'customer/register.html', context={
-#                 'form': form, 'serializer': serializer
-#             })
-#         return render(request, 'customer/register.html', context={
-#             'form': form
-#         })
 class RequestPaswordResetEmail(generics.GenericAPIView):
     serializer_class = ResetPasswordEmailRequestSerializer
 
@@ -85,7 +37,7 @@ class RequestPaswordResetEmail(generics.GenericAPIView):
             uidb64 = urlsafe_base64_encode(smart_bytes(customer.id))
             token = PasswordResetTokenGenerator().make_token(customer)
             current_site = get_current_site(request=request).domain
-            relativeLink = reverse('password-reset-confirm', kwargs={
+            relativeLink = reverse('customer:set-new-password', kwargs={
                 'uidb64': uidb64,
                 'token': token
             })
@@ -118,13 +70,13 @@ class CheckPasswordTokenView(generics.GenericAPIView):
                              'uidb64': uidb64,
                              'token': token}, status=status.HTTP_200_OK)
         except DjangoUnicodeDecodeError as identifier:
-            raise AuthenticationFailed('the reset link is invalid',401)
+            raise AuthenticationFailed('the reset link is invalid', 401)
 
 
 class SetNewPasswordAPIView(generics.GenericAPIView):
     serializer_class = SetNewPasswordSerializer
 
-    def patch(self,request):
-        serializer=self.serializer_class(data=request.data)
+    def patch(self, request):
+        serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response({'success':True ,'message':'Password reset success'},status=status.HTTP_200_OK)
+        return Response({'success': True, 'message': 'Password reset success'}, status=status.HTTP_200_OK)
