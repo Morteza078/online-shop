@@ -1,0 +1,10 @@
+body {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+.btn-show-pass {
+    right: initial !important;
+    left: 0 !important;
+}
+
