@@ -6,7 +6,6 @@ app_name = 'products'
 
 urlpatterns = [
     path('', index, name='index'),
-    # path('detail/<int:event_id>/', EventDetailView.as_view(), name='detail'),
     # path('create/', create_or_update, name='create'),
     # path('update/<int:event_id>/', create_or_update, name='update'),
     # path('user-events/', user_event, name='user-events'),
