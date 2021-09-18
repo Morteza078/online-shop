@@ -22,17 +22,26 @@ class CustomerRegisterForm(forms.Form):
     password = forms.CharField(max_length=100, widget=forms.PasswordInput, label=_('password'))
     confirm_password = forms.CharField(max_length=100, widget=forms.PasswordInput, label=_('confirm password'))
 
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #     password = cleaned_data.get('password')
-    #     confirm_password = cleaned_data.get('confirm_password')
-    #     username = cleaned_data.get('username')
-    #     # print(Customer.objects.filter(username=username).exists())
-    #     if CustomUser.objects.filter(username=username).exists():
-    #         raise forms.ValidationError(_('this username already exist'))
-    #     elif password != confirm_password or password is None or confirm_password is None:
-    #         raise forms.ValidationError(_('The two password fields didn’t match'))
-    #     return cleaned_data
+
+class ResetPasswordSendEmail(forms.Form):
+    email = forms.CharField(max_length=100, label=_('email'))
+
+
+class SetResetPassword(forms.Form):
+    new_password = forms.CharField(max_length=100, widget=forms.PasswordInput, label=_('new_password'))
+
+
+# def clean(self):
+#     cleaned_data = super().clean()
+#     password = cleaned_data.get('password')
+#     confirm_password = cleaned_data.get('confirm_password')
+#     username = cleaned_data.get('username')
+#     # print(Customer.objects.filter(username=username).exists())
+#     if CustomUser.objects.filter(username=username).exists():
+#         raise forms.ValidationError(_('this username already exist'))
+#     elif password != confirm_password or password is None or confirm_password is None:
+#         raise forms.ValidationError(_('The two password fields didn’t match'))
+#     return cleaned_data
 
 
 class CustomerChangePassword(PasswordChangeForm):
