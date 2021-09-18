@@ -1,0 +1,56 @@
+{% extends 'base/base.html' %}
+{% load i18n %}
+{% block content %}
+<h1>dkcdklcvsdklvklcfdkdfcsd;aluer;aleifhlddfj</h1>
+    <div class="container">
+    <div class="card" style="background-color: #A9CCE3;">
+        <div class="card-header text-center">
+            <img src="/media/{{ customer.photo }}" alt="{{ customer.username }}"
+                style="border-radius: 50%; width: 25rem; height: 25rem;">
+            <h2>
+                <i class="gb gb_face"></i>
+                {% trans "Name" %}: {{ customer.first_name }} {{ customer.last_name }}
+                <a href=""><i class="gb gb_edit"></i></a>
+            </h2>
+            <p>
+                {% trans "Gender" %}: {{ customer.gender_type }}<br>
+                {% trans "Age" %}:
+                    {% if customer.age %}
+                        {{ customer.age }}
+                    {% else %}
+                        -
+                    {% endif %}
+                {% trans "Year" %}
+            </p>
+
+            <br>
+
+            <p>
+                <a href="" class="btn btn-light">
+                    <i class="gb gb_shopping_basket"></i> {% trans "Orders List" %}
+                </a>
+            </p>
+
+            <br><hr style="background-color: #1B2631;"><br>
+
+            <h3><i class="gb gb_location_on"></i>{% trans "Addresses" %}:</h3>
+            {% for address in customer.addresses.all %}
+                <p>
+                    {{ forloop.counter }}. {{ address.name }}:
+                    {{ address.province }} - {{ address.city }}
+                    <a href="{% url '' address.zip_code %}">
+                        <i class="gb gb_edit"></i>
+                    </a>
+                </p>
+            {% endfor %}
+
+            <br>
+
+            <a href="" class="btn btn-light">
+                <i class="gb gb_add_location"></i> {% trans "Add New Address" %}
+            </a>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
