@@ -40,8 +40,7 @@
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
-                <form action="" class="login100-form validate-form" id="register_form"
-                      method="post">
+                <form action="" class="login100-form validate-form" id="register_form">
 {#                                     {% csrf_token %}#}
                     <span class="login100-form-title p-b-26">
 					{% translate 'Welcome' %}
@@ -127,6 +126,12 @@
                         </div>
                     </div>
                 </form>
+               <div class="text-center p-t-115">
+						<a href="{% url 'customer:reset-password' %}" class="txt1">
+							{% translate 'forgot passwordd?' %}
+						</a>
+
+                </div>
             </div>
         </div>
     </div>
