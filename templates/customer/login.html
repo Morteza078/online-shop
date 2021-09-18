@@ -37,15 +37,15 @@
 {% endblock %}
 {% block content %}
 
-<div class="limiter">
-    <div class="container-login100">
-        <div class="wrap-login100">
-            <form class="login100-form validate-form" method="post">
-                {% csrf_token %}
-                <span class="login100-form-title p-b-26">
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <form class="login100-form validate-form" method="post">
+                    {% csrf_token %}
+                    <span class="login100-form-title p-b-26">
 					{% translate 'Welcome' %}
 					</span>
-                <span class="login100-form-title p-b-48">
+                    <span class="login100-form-title p-b-48">
                     {% if form.non_field_errors %}
                         <div class="errors">
                         {% for error in form.non_field_errors %}
@@ -55,80 +55,85 @@
                         {% endfor %}
                     </div>
                     {% endif %}
-                    {#						<i class="zmdi zmdi-font"></i>#}
+                        {#						<i class="zmdi zmdi-font"></i>#}
 					</span>
 
-                <div class="wrap-input100 validate-input" data-validate="Valid email is: a@b.c">
-                    {{ form.username|add_class:"input100" }}
-                    {% if form.username.errors %}
-                        <div class="errors">
-                            {% for error in form.username.errors %}
-                                <span style="font-size: x-small;color: red">
+                    <div class="wrap-input100 validate-input" data-validate="Valid email is: a@b.c">
+                        {{ form.username|add_class:"input100" }}
+                        {% if form.username.errors %}
+                            <div class="errors">
+                                {% for error in form.username.errors %}
+                                    <span style="font-size: x-small;color: red">
                            {{ error }}
                            </span>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                    <span class="focus-input100" data-placeholder="{% translate 'username' %}"></span>
-                </div>
-                <div class="wrap-input100 validate-input" data-validate="{% translate 'Enter password' %}">
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <span class="focus-input100" data-placeholder="{% translate 'username' %}"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input" data-validate="{% translate 'Enter password' %}">
 						<span class="btn-show-pass">
 							<i class="zmdi zmdi-eye"></i>
 						</span>
-                    {{ form.password|add_class:"input100" }}
-                       {% if form.password.errors %}
-                        <div class="errors">
-                            {% for error in form.password.errors %}
-                                <span style="font-size: small;color: red">
+                        {{ form.password|add_class:"input100" }}
+                        {% if form.password.errors %}
+                            <div class="errors">
+                                {% for error in form.password.errors %}
+                                    <span style="font-size: small;color: red">
                            {{ error }}
                            </span>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                    <span class="focus-input100" data-placeholder="{% translate 'Password' %}"></span>
-                </div>
-
-                <div class="container-login100-form-btn">
-                    <div class="wrap-login100-form-btn">
-                        <div class="login100-form-bgbtn"></div>
-                        <button class="login100-form-btn">
-                            {% translate 'Login' %}
-                        </button>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <span class="focus-input100" data-placeholder="{% translate 'Password' %}"></span>
                     </div>
-                </div>
 
-                <div class="text-center p-t-115">
+                    <div class="container-login100-form-btn">
+                        <div class="wrap-login100-form-btn">
+                            <div class="login100-form-bgbtn"></div>
+                            <button class="login100-form-btn">
+                                {% translate 'Login' %}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="text-center p-t-115">
 						<span class="txt1">
 							{% translate 'Don’t have an account?' %}
 						</span>
 
-                    <a class="txt2" href="{% url 'customer:register' %}">
-                        {% trans 'Sign Up' %}
-                    </a>
-                </div>
-            </form>
+                        <a class="txt2" href="{% url 'customer:register' %}">
+                            {% trans 'Sign Up' %}
+                        </a>
+                        <div>
+                            <a href="{% url 'customer:reset-password' %}" class="txt1">
+                            {% translate 'forgot passwordd?' %}
+                        </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
 
-<div id="dropDownSelect1"></div>
+    <div id="dropDownSelect1"></div>
 {% endblock %}
 {% block js %}
-<!--===============================================================================================-->
-<script src="{% static 'auth/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
-<!--===============================================================================================-->
-<script src="{% static 'auth/vendor/animsition/js/animsition.min.js' %}"></script>
-<!--===============================================================================================-->
-<script src="{% static 'auth/vendor/bootstrap/js/popper.js' %}"></script>
-<script src="{% static 'auth/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-<!--===============================================================================================-->
-<script src="{% static 'auth/vendor/select2/select2.min.js' %}"></script>
-<!--===============================================================================================-->
-<script src="{% static 'auth/vendor/daterangepicker/moment.min.js' %}"></script>
-<script src="{% static 'auth/vendor/daterangepicker/daterangepicker.js' %}"></script>
-<!--===============================================================================================-->
-<script src="{% static 'auth/vendor/countdowntime/countdowntime.js' %}"></script>
-<!--===============================================================================================-->
-<script src="{% static 'auth/js/main.js' %}"></script>
+    <!--===============================================================================================-->
+    <script src="{% static 'auth/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+    <!--===============================================================================================-->
+    <script src="{% static 'auth/vendor/animsition/js/animsition.min.js' %}"></script>
+    <!--===============================================================================================-->
+    <script src="{% static 'auth/vendor/bootstrap/js/popper.js' %}"></script>
+    <script src="{% static 'auth/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <!--===============================================================================================-->
+    <script src="{% static 'auth/vendor/select2/select2.min.js' %}"></script>
+    <!--===============================================================================================-->
+    <script src="{% static 'auth/vendor/daterangepicker/moment.min.js' %}"></script>
+    <script src="{% static 'auth/vendor/daterangepicker/daterangepicker.js' %}"></script>
+    <!--===============================================================================================-->
+    <script src="{% static 'auth/vendor/countdowntime/countdowntime.js' %}"></script>
+    <!--===============================================================================================-->
+    <script src="{% static 'auth/js/main.js' %}"></script>
 {% endblock %}
