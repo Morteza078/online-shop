@@ -1,0 +1,156 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% block title %}{% translate 'Register' %}{% endblock %}
+{% block style.css %}
+    <meta charset="UTF-8">
+    <meta name="viewAport" content="width=device-width, initial-scale=1">
+    {% get_current_language as LANGUAGE_CODE %}
+    {% if LANGUAGE_CODE == 'fa' %}
+        <link href="{% static 'base/css/rtl.css' %}" rel="stylesheet"/>
+    {% endif %}
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="{% static 'auth/images/icons/favicon.ico' %}"/>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'auth/vendor/bootstrap/css/bootstrap.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'auth/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'auth/fonts/iconic/css/material-design-iconic-font.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'auth/vendor/animate/animate.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'auth/vendor/css-hamburgers/hamburgers.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'auth/vendor/animsition/css/animsition.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'auth/vendor/select2/select2.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'auth/vendor/daterangepicker/daterangepicker.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'auth/css/util.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'auth/css/main.css' %}">
+    <!--===============================================================================================-->
+{% endblock %}
+{% block content %}
+
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <form action="" class="login100-form validate-form" id="register_form"
+                      method="post">
+{#                                     {% csrf_token %}#}
+                    <span class="login100-form-title p-b-26">
+					{% translate 'Welcome' %}
+					</span>
+                    <span class="login100-form-title p-b-48">
+
+
+
+                        <div class="errors">
+                            <span style="font-size: small;color: red" id="non-field-error">
+                           </span>
+                        </div>
+					</span>
+
+
+                    <div class="wrap-input100 validate-input" data-validate="Valid email is: a@b.c">
+                        {{ form.username|add_class:"input100" }}
+                        {% if form.username.errors %}
+                            <div class="errors">
+                                {% for error in form.username.errors %}
+                                    <span style="font-size: x-small;color: red">
+                           {{ error }}
+                           </span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <span class="focus-input100" data-placeholder="{% translate 'username' %}"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input" data-validate="Valid email is: a@b.c">
+                        {{ form.email|add_class:"input100" }}
+                        {% if form.email.errors %}
+                            <div class="errors">
+                                {% for error in form.email.errors %}
+                                    <span style="font-size: x-small;color: red">
+                           {{ error }}
+                           </span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <span class="focus-input100" data-placeholder="{% translate 'email' %}"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input" data-validate="{% translate 'Enter password' %}">
+						<span class="btn-show-pass">
+							<i class="zmdi zmdi-eye"></i>
+						</span>
+                        {{ form.password|add_class:"input100" }}
+                        {% if form.password.errors %}
+                            <div class="errors">
+                                {% for error in form.password.errors %}
+                                    <span style="font-size: small;color: red">
+                           {{ error }}
+                           </span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <span class="focus-input100" data-placeholder="{% translate 'Password' %}"></span>
+                    </div>
+
+
+                    <div class="wrap-input100 validate-input" data-validate="{% translate 'Enter confirm password' %}">
+						<span class="btn-show-pass">
+							<i class="zmdi zmdi-eye"></i>
+						</span>
+                        {{ form.confirm_password|add_class:"input100" }}
+                        {% if form.confirm_password.errors %}
+                            <div class="errors">
+                                {% for error in form.confirm_password.errors %}
+                                    <span style="font-size: small;color: red">
+                           {{ error }}
+                           </span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <span class="focus-input100" data-placeholder="{% translate 'confirm password' %}"></span>
+                    </div>
+
+                    <div class="container-login100-form-btn">
+                        <div class="wrap-login100-form-btn">
+                            <div class="login100-form-bgbtn"></div>
+                            <button type="submit" class="login100-form-btn">
+                                {% trans 'Sign Up' %}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="dropDownSelect1"></div>
+{% endblock %}
+{% block js %}
+    <!--===============================================================================================-->
+    <script src="{% static 'auth/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+    <!--===============================================================================================-->
+    <script src="{% static 'auth/vendor/animsition/js/animsition.min.js' %}"></script>
+    <!--===============================================================================================-->
+    <script src="{% static 'auth/vendor/bootstrap/js/popper.js' %}"></script>
+    <script src="{% static 'auth/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <!--===============================================================================================-->
+    <script src="{% static 'auth/vendor/select2/select2.min.js' %}"></script>
+    <!--===============================================================================================-->
+    <script src="{% static 'auth/vendor/daterangepicker/moment.min.js' %}"></script>
+    <script src="{% static 'auth/vendor/daterangepicker/daterangepicker.js' %}"></script>
+    <!--===============================================================================================-->
+    <script src="{% static 'auth/vendor/countdowntime/countdowntime.js' %}"></script>
+    <!--===============================================================================================-->
+    <script src="{% static 'auth/js/main.js' %}"></script>
+<!--=====================js of register==========================================================================-->
+    <script src="{% static 'auth/js/register.js' %}"></script>
+{% endblock %}
