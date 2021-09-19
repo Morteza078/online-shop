@@ -67,13 +67,14 @@ class CustomerLogoutView(LoginRequiredMixin, LogoutView):
     pass
 
 
-class ChangePasswordView(LoginRequiredMixin, PasswordChangeView):
-    """
-    Inheritanced from Built-in View for Change Customer Password in New Template
-    """
+class ChangePasswordView(LoginRequiredMixin,View):
     form_class = CustomerChangePassword
-    success_url = reverse_lazy("products:index")
-    template_name = "customer/change_password.html"
+    template_name = 'customer/change_password.html'
+    initial = {'key': 'value'}
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form': form})
 
 
 class SendLinkResetPasswordView(View):

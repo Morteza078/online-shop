@@ -13,7 +13,7 @@ import os
 from pathlib import Path
 
 LOGIN_REDIRECT_URL = 'products:index'
-LOGIN_URL = 'customer:auth'
+LOGIN_URL = 'customer:login'
 
 LOGOUT_REDIRECT_URL = 'customer:auth'
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
