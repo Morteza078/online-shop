@@ -13,7 +13,7 @@ from django.views import generic, View
 from django.views.generic import TemplateView
 
 from customer.forms import CustomerLoginForm, CustomerRegisterForm, CustomerChangePassword, ResetPasswordSendEmail, \
-    SetResetPassword
+    SetResetPassword, EditProfileForm
 
 # Create your views here.
 from customer.models import Customer
@@ -67,14 +67,16 @@ class CustomerLogoutView(LoginRequiredMixin, LogoutView):
     pass
 
 
-class ChangePasswordView(LoginRequiredMixin,View):
+class ChangePasswordView(LoginRequiredMixin, View):
     form_class = CustomerChangePassword
     template_name = 'customer/change_password.html'
     initial = {'key': 'value'}
 
     def get(self, request, *args, **kwargs):
+        customer = Customer.objects.get(username=request.user)
+        token = PasswordResetTokenGenerator().make_token(customer)
         form = self.form_class(initial=self.initial)
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {'form': form, 'token': token})
 
 
 class SendLinkResetPasswordView(View):
@@ -88,8 +90,6 @@ class SendLinkResetPasswordView(View):
 
 
 def Set_New_Password(request, uidb64, token):
-    print(uidb64)
-    print(token)
     try:
         id = smart_str(urlsafe_base64_decode(uidb64))
         customer = Customer.objects.get(id=id)
@@ -106,3 +106,29 @@ def Set_New_Password(request, uidb64, token):
         return render(request, 'customer/set_reset_password.html', context)
     except UnicodeDecodeError as e:
         raise DjangoUnicodeDecodeError('Token is not valid, please request a new one', *e.args)
+
+
+class EditProfileView(LoginRequiredMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        try:
+            customer = Customer.objects.get(id=request.user.id)
+        except Customer.DoesNotExist:
+            return redirect(reverse("customer:logout"))
+        form = EditProfileForm(instance=customer)
+        return render(request, "customer/edit_profile.html", {
+            'form': form,
+        })
+
+    def post(self, request, *args, **kwargs):
+        try:
+            customer = Customer.objects.get(id=request.user.id)
+        except Customer.DoesNotExist:
+            return redirect(reverse("customer:logout"))
+        form = EditProfileForm(instance=customer, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse("customer:profile"))
+        return render(request, "customer/edit_profile.html", {
+            'form': form,
+        })
