@@ -9,9 +9,10 @@ from django.utils.translation import gettext_lazy as _
 
 
 class CustomUser(AbstractUser):
-    image = models.ImageField(_('image'), upload_to='', null=True, blank=True)
+    image = models.ImageField(_('image'), upload_to='profiles/', null=True, blank=True)
     is_active = models.BooleanField(_('active'), default=True)
     amount_of_shopping = models.PositiveIntegerField(_('amount of shopping'), default=0)
+    email = models.EmailField(_('email address'), unique=True)
 
     class Meta:
         verbose_name = _("Custom user")
