@@ -10,11 +10,12 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from rest_framework import status, generics, permissions
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import AuthenticationFailed
-from rest_framework.permissions import IsAdminUser, AllowAny
+from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from .utils import Util
-
-from .serializers import CustomerRegisterSerializer, ResetPasswordEmailRequestSerializer, SetNewPasswordSerializer
+from django.utils.translation import gettext_lazy as _
+from .serializers import CustomerRegisterSerializer, ResetPasswordEmailRequestSerializer, SetNewPasswordSerializer, \
+    SetChangePasswordSerializer
 from customer.models import Customer, CustomUser
 from ..forms import CustomerRegisterForm
 
@@ -80,3 +81,50 @@ class SetNewPasswordAPIView(generics.GenericAPIView):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         return Response({'success': True, 'message': 'Password reset success'}, status=status.HTTP_200_OK)
+
+
+class SetChangePasswordView(generics.GenericAPIView):
+    serializer_class = SetChangePasswordSerializer
+    # permission_classes = (permissions.IsAuthenticated,)
+
+
+    def patch(self, request):
+        username = request.data['username']
+        customer = Customer.objects.get(username=username)
+        serializer = self.get_serializer(data=request.data)
+        # Check old password
+        if not customer.check_password(request.data['old_password']):
+            return Response({"old_password": _("Wrong password.")}, status=status.HTTP_400_BAD_REQUEST)
+        if serializer.is_valid():
+            # set_password also hashes the password that the user will get
+            customer.set_password(request.data['new_password1'])
+            customer.save()
+            response = {
+                'status': 'success',
+                'message': _('Password updated successfully'),
+            }
+
+            return Response(response, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# class EditProfileView(generics.GenericAPIView):
+#     serializer_class = EditProfileSerializer
+#     # permission_classes = (permissions.IsAuthenticated,)
+#
+#     def put(self, request):
+#         #old_username = request.data['old_username']
+#         # username=request.data['username']
+#         print(request.data['image'])
+#         # customer = Customer.objects.get(username='morteza')
+#         # serializer = self.get_serializer(data=request.data)
+#         # print(request.data['image'])
+#         # if serializer.is_valid():
+#         #     customer.image=request.data['image']
+#         #     customer.save()
+#         #     response = {
+#         #         'status': 'success',
+#         #         'message': _('Password updated successfully'),
+#         #     }
+#         #     return Response(response, status=status.HTTP_200_OK)
+#         return Response({'success':'fdlsfjsl'}, status=status.HTTP_400_BAD_REQUEST)
