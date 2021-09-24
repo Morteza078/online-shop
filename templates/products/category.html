@@ -1,0 +1,20 @@
+{% load i18n %}
+{% load static %}
+<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+    {% for cat in categories %}
+        {% if cat.parent == None %}
+            <li>
+            <a class="dropdown-item" href="{% url 'products:product_category' cat.id %}">
+            {{ cat.name }}
+            </a>
+         {% if cat.children.all %}
+             {% include 'products/category_loop.html' %}
+          {% endif %}
+            </li>
+          {% endif %}
+    {% endfor %}
+
+</ul>
+
+

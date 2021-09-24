@@ -3,33 +3,37 @@
 <head>
     {% load static %}
     {% load i18n %}
+    {% load base_tags %}
     {% get_current_language as LANGUAGE_CODE %}
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
-    <title>{% block title %}{% translate 'Shop-MaktabSharif-52 BootCamp' %}{% endblock %}</title>
+    <title>{% block title %}{% translate 'Shop-MaktabSharif-53 BootCamp' %}{% endblock %}</title>
     {% block style.css %}{% endblock %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
           integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
             integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
             crossorigin="anonymous"></script>
+
     <!-- direction for persian language-->
     {% if LANGUAGE_CODE == 'fa' %}
         <link href="{% static 'base/css/rtl.css' %}" rel="stylesheet"/>
     {% endif %}
+<link rel="stylesheet" type="text/css" href="{% static 'base/css/category.css' %}">
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{% static 'base/css/base.css' %}" rel="stylesheet"/>
 </head>
-<body>
+<body style="background-color: #f2f2f3; ">
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
         <a class="navbar-brand bi bi-house-door-fill " aria-current="page"
            href="{% url 'products:index' %}">{% translate "MAKTABSHARIF-53 SHOP" %}</a>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
                 class="navbar-toggler-icon"></span></button>
@@ -64,31 +68,45 @@
                     </button>
                 </form>
             {% endif %}
-            <button type="button" class="btn btn-outline-dark m-1"> {% translate 'Categories' %}</button>
-            <!--person icon for watching of profile and my orders-->
-            {% if user.is_authenticated %}
-                <div class=" dropdown m-2 ">
-                    <button class=" dropdown-toggle bi-person btn btn-outline-dark" id="navbarDropdown" href="#"
-                            role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false"></button>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!"> {% translate "Profile" %} </a></li>
-                        <li>
-                            <hr class="dropdown-divider"/>
-                        </li>
-                        <li><a class="dropdown-item" href="#!">  {% translate 'My orders' %} </a></li>
-                        <form action="{% url 'customer:logout' %}">
-                            <input class="btn btn-outline-dark m-1" type="submit" value="{% translate 'Logout' %}"/>
-                        </form>
+            <div class=" dropdown m-2 ">
+                <button class=" dropdown-toggle  btn btn-outline-dark" id="navbarDropdown" href="#"
+                        role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">{% translate 'Categories' %} </button>
+                {% category %}
 
-                    </ul>
+                {#            <button type="button" class="btn btn-outline-dark m-1"> {% translate 'Categories' %}</button>#}
+            </div>
+            <!--person icon for watching of profile and my orders-->
+            {% block drop-drown %}
+                {% if user.is_authenticated %}
+                    <div class=" dropdown m-2 ">
+                        <button class=" dropdown-toggle bi-person btn btn-outline-dark" id="navbarDropdown" href="#"
+                                role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false"></button>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                            <form action="{% url 'customer:profile' %}" method="get">
+                                <input class="btn btn-outline-dark m-1 dropdown-item" type="submit"
+                                       value="{% translate 'Profile' %}"/>
+                            </form>
+                            <li>
+                                <hr class="dropdown-divider"/>
+                            </li>
+                            <li><a class="dropdown-item" href="#!">  {% translate 'My orders' %} </a></li>
+                            <form action="{% url 'customer:logout' %}">
+                                <input class="btn btn-outline-dark m-1 dropdown-item" type="submit"
+                                       value="{% translate 'Logout' %}"/>
+                            </form>
+
+                        </ul>
+                    </div>
+                {% else %}
+                    <form action="{% url 'customer:login' %}">
+                        <input class="btn btn-outline-dark m-1" type="submit" value="{% translate 'Login' %}"/>
+                    </form>
+                {% endif %}
                 </div>
-            {% else %}
-                <form action="{% url 'customer:login' %}">
-                    <input class="btn btn-outline-dark m-1" type="submit" value="{% translate 'Login' %}"/>
-                </form>
-            {% endif %}
-        </div>
+            {% endblock %}
         <a href="{% url 'change_lang' %}?lang=en&next=/en/{{ request.path|slice:'4:' }}">{% translate 'EN' %}</a> / <a
             href="{% url 'change_lang' %}?lang=fa&next=/fa/{{ request.path|slice:'4:' }}">{% translate 'FA' %}</a>
     </div>
@@ -106,6 +124,14 @@
 {#</footer>#}
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
-{% block js %}{% endblock %}
+{% block js %}
+{% endblock %}
+<script>
+    var languege_code='{{ LANGUAGE_CODE }}'
+
+</script>
+<script src="{% static 'auth/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+   <script src="{% static 'products/js/index.js' %}"></script>
+
 </body>
 </html>

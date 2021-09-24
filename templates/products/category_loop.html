@@ -1,0 +1,10 @@
+<ul class="dropdown-menu dropdown-submenu dropdown-submenu-left">
+    {% for cat in cat.children.all %}
+        <li>
+            <a class="dropdown-item" href="{% url 'products:product_category' cat.id %}">{{ cat.name }}</a>
+        {% if cat.children.all %}
+             {% include 'products/category_loop.html' %}
+          {% endif %}
+        </li>
+    {% endfor %}
+</ul>
