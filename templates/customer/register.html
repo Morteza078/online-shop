@@ -41,7 +41,7 @@
         <div class="container-login100">
             <div class="wrap-login100">
                 <form action="" class="login100-form validate-form" id="register_form">
-{#                                     {% csrf_token %}#}
+                    {#                                     {% csrf_token %}#}
                     <span class="login100-form-title p-b-26">
 					{% translate 'Welcome' %}
 					</span>
@@ -58,28 +58,18 @@
 
                     <div class="wrap-input100 validate-input" data-validate="Valid email is: a@b.c">
                         {{ form.username|add_class:"input100" }}
-                        {% if form.username.errors %}
-                            <div class="errors">
-                                {% for error in form.username.errors %}
-                                    <span style="font-size: x-small;color: red">
-                           {{ error }}
-                           </span>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
+                        <div class="errors">
+                                    <span style="font-size: x-small;color: red" id="username-error">
+                                      </span>
+                        </div>
                         <span class="focus-input100" data-placeholder="{% translate 'username' %}"></span>
                     </div>
                     <div class="wrap-input100 validate-input" data-validate="Valid email is: a@b.c">
                         {{ form.email|add_class:"input100" }}
-                        {% if form.email.errors %}
-                            <div class="errors">
-                                {% for error in form.email.errors %}
-                                    <span style="font-size: x-small;color: red">
-                           {{ error }}
-                           </span>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
+                         <div class="errors">
+                                    <span style="font-size: x-small;color: red" id="email-error">
+                                      </span>
+                        </div>
                         <span class="focus-input100" data-placeholder="{% translate 'email' %}"></span>
                     </div>
                     <div class="wrap-input100 validate-input" data-validate="{% translate 'Enter password' %}">
@@ -87,15 +77,10 @@
 							<i class="zmdi zmdi-eye"></i>
 						</span>
                         {{ form.password|add_class:"input100" }}
-                        {% if form.password.errors %}
-                            <div class="errors">
-                                {% for error in form.password.errors %}
-                                    <span style="font-size: small;color: red">
-                           {{ error }}
-                           </span>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
+                         <div class="errors">
+                                    <span style="font-size: x-small;color: red" id="password-error">
+                                      </span>
+                        </div>
                         <span class="focus-input100" data-placeholder="{% translate 'Password' %}"></span>
                     </div>
 
@@ -105,15 +90,10 @@
 							<i class="zmdi zmdi-eye"></i>
 						</span>
                         {{ form.confirm_password|add_class:"input100" }}
-                        {% if form.confirm_password.errors %}
-                            <div class="errors">
-                                {% for error in form.confirm_password.errors %}
-                                    <span style="font-size: small;color: red">
-                           {{ error }}
-                           </span>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
+                         <div class="errors">
+                                    <div style="font-size: x-small;color: red" id="confirm-password-error">
+                                      </div>
+                        </div>
                         <span class="focus-input100" data-placeholder="{% translate 'confirm password' %}"></span>
                     </div>
 
@@ -126,10 +106,10 @@
                         </div>
                     </div>
                 </form>
-               <div class="text-center p-t-115">
-						<a href="{% url 'customer:reset-password' %}" class="txt1">
-							{% translate 'forgot passwordd?' %}
-						</a>
+                <div class="text-center p-t-115">
+                    <a href="{% url 'customer:reset-password' %}" class="txt1">
+                        {% translate 'forgot passwordd?' %}
+                    </a>
 
                 </div>
             </div>
@@ -156,6 +136,6 @@
     <script src="{% static 'auth/vendor/countdowntime/countdowntime.js' %}"></script>
     <!--===============================================================================================-->
     <script src="{% static 'auth/js/main.js' %}"></script>
-<!--=====================js of register==========================================================================-->
+    <!--=====================js of register==========================================================================-->
     <script src="{% static 'auth/js/register.js' %}"></script>
 {% endblock %}

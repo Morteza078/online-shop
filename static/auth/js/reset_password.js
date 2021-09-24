@@ -32,7 +32,7 @@ $('#set_new_password_form').on('submit', function (e) {
     new XMLHttpRequest().open('PATCH', '/')
     e.preventDefault();
     $.ajax({
-        type: 'PATCH',
+        type: "PATCH",
         url: url,
         data: JSON.stringify({
             'password': new_password,
