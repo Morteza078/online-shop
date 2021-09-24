@@ -8,3 +8,8 @@ body {
     left: 0 !important;
 }
 
+
+.dropdown-menu .dropdown-submenu-left {
+    left: 100% !important;
+    right: auto !important;
+}
