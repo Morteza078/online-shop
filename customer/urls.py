@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import CustomerLoginView, CustomerLogoutView, ChangePasswordView, RegisterView, CustomerProfileView, \
-    SendLinkResetPasswordView,Set_New_Password
+    SendLinkResetPasswordView, Set_New_Password, EditProfileView
 
 app_name = 'customer'
 
@@ -13,4 +13,5 @@ urlpatterns = [
     path('set-new-password/<uidb64>/<token>/', Set_New_Password, name="set-new-password"),
     path('change-password/', ChangePasswordView.as_view(), name="change_password"),
     path('profile/', CustomerProfileView.as_view(), name="profile"),
+    path('edit-profile/', EditProfileView.as_view(), name="edit_profile"),
 ]
