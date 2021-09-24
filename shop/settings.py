@@ -15,7 +15,7 @@ from pathlib import Path
 LOGIN_REDIRECT_URL = 'products:index'
 LOGIN_URL = 'customer:login'
 
-LOGOUT_REDIRECT_URL = 'customer:auth'
+LOGOUT_REDIRECT_URL = 'customer:login'
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -87,7 +87,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'shop',
         'USER': 'postgres',
-        'PASSWORD': '*****************',
+        'PASSWORD': 'Morteza078@',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
@@ -154,4 +154,11 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'mortezarobatjazi.77@gmail.com'
-EMAIL_HOST_PASSWORD = '*****************'
+EMAIL_HOST_PASSWORD = '*******'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
