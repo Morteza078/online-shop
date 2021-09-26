@@ -57,10 +57,10 @@
                    style="margin: 2px;font-size: revert;"
                    class="btn btn-outline-primary w-75 ml-4 ">{% translate 'Edit Profile' %}</a>
                 <br/>
-                <a type="submit" href="" style="margin: 2px;font-size: revert;"
+                <a type="submit" href="{% url 'orders:recent-orders' %}" style="margin: 2px;font-size: revert;"
                    class="btn btn-outline-primary w-75 ml-4">{% translate 'Recent orders' %}</a>
                 <br/>
-                <a type="submit" href="" style="margin: 2px;font-size: revert;"
+                <a type="submit" href="{% url 'orders:orders-history' %}" style="margin: 2px;font-size: revert;"
                    class="btn btn-outline-primary w-75 ml-4 ">{% translate 'Order history' %}</a>
                 <a type="submit" href="{% url 'customer:change_password' %}"
                    style="margin: 2px;font-size: revert;"
