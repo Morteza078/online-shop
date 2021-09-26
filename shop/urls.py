@@ -29,6 +29,7 @@ urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
     path('', include('products.urls')),
     path('customer/', include('customer.urls')),
+    path('orders/', include('orders.urls')),
     path('api/', include('core.api.urls')),
 
 )

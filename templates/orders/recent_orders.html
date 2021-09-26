@@ -1,0 +1,91 @@
+{% extends 'base/base.html' %}
+{% load i18n %}
+{% block content %}
+    <table class="table table-bordered " style="text-align: center">
+        <thead class="bg-primary text-white">
+        <tr>
+            <th>#</th>
+            <th>{% translate 'Start date' %}</th>
+            <th>{% translate 'status' %}</th>
+            <th>{% translate 'Address' %}</th>
+            <th>{% translate 'More details' %}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in recent_orders %}
+            <tr>
+                <th class="bg-primary text-white" scope="row">{{ forloop.counter }}</th>
+                <td>{{ order.start_date }}</td>
+                <td>{{ order.status }}</td>
+                <td>{{ order.address}}</td>
+                <td><a type="submit" href="" class="btn btn-outline-primary w-75 ml-4 " data-toggle="modal"
+                       data-target="#modal-{{ order.id }}">{% translate 'order items' %}</a></td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+
+    {% for order in recent_orders %}
+        <!-- large modal -->
+        <div class="modal fade" id="modal-{{ order.id }}" tabindex="-1" role="dialog" aria-labelledby="basicModal"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">{% translate 'Order details' %}</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-bordered " style="text-align: center">
+                            <thead class="bg-primary text-white">
+                            <tr>
+                                <th>#</th>
+                                <th>{% translate 'Name product' %}</th>
+                                <th>{% translate 'Price product' %}</th>
+                                <th>{% translate 'Quantity' %}</th>
+                                <th>{% translate 'Image' %}</th>
+                                <th>{% translate 'More description' %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for order_item in order.items.all %}
+                                <tr>
+                                    <th class="bg-primary text-white" scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ order_item.product.name }}</td>
+                                    <td>{{ order_item.product.price }}</td>
+                                    <td>{{ order_item.quantity }}</td>
+                                    <td><img class="rounded" width="150" height="70" src="{{ order_item.product.images.first.image.url }}"></td>
+                                 {% for attribute in order_item.product.attributes.all %}
+                                    <td>
+                                    {{ attribute.name }}:{{ attribute.values }}<br>
+                                    </td>
+                                 {% endfor %}
+                                </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                                   <p>
+                     {% translate 'Address' %}:  {{ order.address }}
+                                  </p>
+
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-outline-danger " data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    {% endfor %}
+
+
+{% endblock %}

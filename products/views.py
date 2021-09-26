@@ -11,7 +11,6 @@ from products.models import Product, Advertising, Category
 
 def change_lang(request):
     if request.method == "GET":
-        print('in change_lang')
         activate(request.GET.get('lang'))
         return redirect(request.GET.get('next'))
 
