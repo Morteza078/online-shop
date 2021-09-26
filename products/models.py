@@ -14,10 +14,12 @@ class Category(models.Model):
         verbose_name = _("Category")
         verbose_name_plural = _("Categories")
 
+    def __str__(self):
+        return f"{self.name}"
+
 
 class Attribute(models.Model):
     name = TranslatedField(models.CharField(_('name'), max_length=250))
-    category = models.ManyToManyField(Category, verbose_name=_('category'))
     values = ArrayField(models.CharField(_('values'), max_length=10), null=True, blank=True)
 
     class Meta:
@@ -42,7 +44,7 @@ class ProductImage(models.Model):
 
 
 class Product(models.Model):
-    name = TranslatedField(models.CharField(_('image'), max_length=250))
+    name = TranslatedField(models.CharField(_('name'), max_length=250))
     description = TranslatedField(models.TextField(_('description')))
     price = models.FloatField(_('price'))
     created_at = models.DateTimeField(auto_now_add=True)
@@ -50,7 +52,8 @@ class Product(models.Model):
     images = models.ManyToManyField(ProductImage, related_name='images', verbose_name=_('images'))
     number_of_products = models.PositiveIntegerField(_('number of products'), default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name=_('category'),
-                                 related_name='products')
+                              related_name='products')
+    attributes = models.ManyToManyField(Attribute, verbose_name=_('Attributes'),null=True,blank=True)
 
     class Meta:
         verbose_name = _("Product")

@@ -1,6 +1,6 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from customer.models import Customer
+from customer.models import Customer, Address
 from orders.generate_code import random_string
 from products.models import Product
 from translated_fields import TranslatedField
@@ -26,9 +26,37 @@ class DiscountCode(models.Model):
         return self.code
 
 
+class Order(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, verbose_name=_('costumer'))
+    start_date = models.DateTimeField(auto_now_add=True)
+    ordered_date = models.DateTimeField(_("order date"), )
+    STATUS = (
+        (_("ready to send"), _("ready to send")),
+        (_("sending"), _("sending")),
+        (_("delivered"), _("delivered")),
+    )
+    status = models.CharField(_("status"), max_length=50, choices=STATUS, default='0')
+    address = models.ForeignKey(Address,on_delete=models.DO_NOTHING,verbose_name=_('Address'),default=1)
+
+
+    class Meta:
+        verbose_name = _("Order")
+        verbose_name_plural = _("Orders")
+        ordering=['start_date']
+
+    def __str__(self):
+        return f'{self.customer.username} at {self.ordered_date}'
+
+    def total_price(self, discount_code):
+        total_price = 0
+        for item in self.items.all():
+            total_price += item.product.price * item.quantity
+        return total_price - (total_price * discount_code)
+
+
 class OrderItem(models.Model):
-    user = models.ForeignKey(Customer, on_delete=models.CASCADE, verbose_name=_('user'))
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_('product'))
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name=_('order'), related_name='items')
     quantity = models.IntegerField(_("quantity"), default=1)
 
     class Meta:
@@ -39,43 +67,15 @@ class OrderItem(models.Model):
         return f'{self.quantity} of {self.product.name}'
 
 
-class Order(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, verbose_name=_('costumer'))
-    items = models.ManyToManyField(OrderItem, verbose_name=_('items of order'))
-    start_date = models.DateTimeField(auto_now_add=True)
-    ordered_date = models.DateTimeField(_("order date"), )
-    STATUS = (
-        ('0', _("ready to send")),
-        ('1', _("sending")),
-        ('2', _("delivered")),
-    )
-    status = models.CharField(_("status"), max_length=50, choices=STATUS, default='0')
-
-    class Meta:
-        verbose_name = _("Order")
-        verbose_name_plural = _("Orders")
-
-    def __str__(self):
-        return self.customer.username
-
-    def total_price(self, discount_code):
-        total_price = 0
-        for item in self.items.all():
-            total_price += item.product.price * item.quantity
-        return total_price * discount_code
-
-
 class OrderHistory(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE,verbose_name=_('costumer'))
-    items = models.ManyToManyField(OrderItem,verbose_name=_('order item'))
-    start_date = models.DateTimeField(_("start date"))
-    ordered_date = models.DateTimeField(_("Ordered date"))
-    status = TranslatedField(models.CharField(_("status"), max_length=50))
+    order = models.OneToOneField(Order, on_delete=models.DO_NOTHING, verbose_name=_('order'))
+    discount = models.IntegerField(_("discount"), validators=[MinValueValidator(0), MaxValueValidator(100)], default=0)
     final_price = models.PositiveIntegerField(_("final price"))
 
     class Meta:
         verbose_name = _("Order history")
         verbose_name_plural = _("Order histories")
+        ordering = ['-order']
 
     def __str__(self):
-        return self.customer.username
+        return f'{self.order.customer.username} at {self.order.start_date}'
