@@ -1,6 +1,11 @@
-console.log(languege_code)
+let add_to_cart=''
+if(languege_code==='fa'){
+    add_to_cart='افزودن به سبد خرید'
+}
+else{
+    add_to_cart='Add to cart'
+}
 $(document).ready(function () {
-    console.log('in index')
     $.ajax({
         url: 'http://127.0.0.1:8000/en/api/products/',
         contentType: "application/json",
@@ -78,7 +83,7 @@ $(document).ready(function () {
                         </div>
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">${add_to_cart}</a>
                             </div>
                         </div>
                     </div>
@@ -86,7 +91,6 @@ $(document).ready(function () {
 
 
             }
-            console.log(product_block)
            $("#block_image").html(product_block)
 
             var move_buttons = ` <li class="page-item">
@@ -117,13 +121,8 @@ $(document).ready(function () {
 })
 
 function move_page_next_previous(button) {
-    console.log(button.value === 'null')
-    console.log(typeof 'null')
     if (button.value === 'null') {
-        console.log('null link')
     } else {
-          console.log(button)
-        console.log('in if')
          $.ajax({
         url: button.value,
         contentType: "application/json",
@@ -202,7 +201,7 @@ function move_page_next_previous(button) {
                         </div>
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">${add_to_cart}</a>
                             </div>
                         </div>
                     </div>
@@ -210,7 +209,6 @@ function move_page_next_previous(button) {
 
 
             }
-            console.log(product_block)
            $("#block_image").html(product_block)
 
             var move_buttons = ` <li class="page-item">
@@ -244,7 +242,6 @@ function move_page_next_previous(button) {
 }
 
 function move_page_number(button) {
-    console.log(button.value);
      $.ajax({
         url: 'http://127.0.0.1:8000/en/api/products/?page='+button.value,
         contentType: "application/json",
@@ -322,7 +319,7 @@ function move_page_number(button) {
                         </div>
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">${add_to_cart}</a>
                             </div>
                         </div>
                     </div>
@@ -330,7 +327,6 @@ function move_page_number(button) {
 
 
             }
-            console.log(product_block)
            $("#block_image").html(product_block)
 
             var move_buttons = ` <li class="page-item">
