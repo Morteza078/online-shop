@@ -52,8 +52,8 @@ class Product(models.Model):
     images = models.ManyToManyField(ProductImage, related_name='images', verbose_name=_('images'))
     number_of_products = models.PositiveIntegerField(_('number of products'), default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name=_('category'),
-                              related_name='products')
-    attributes = models.ManyToManyField(Attribute, verbose_name=_('Attributes'),null=True,blank=True)
+                                 related_name='products')
+    attributes = models.ManyToManyField(Attribute, verbose_name=_('Attributes'))
 
     class Meta:
         verbose_name = _("Product")

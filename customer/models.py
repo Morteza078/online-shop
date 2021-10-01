@@ -11,7 +11,6 @@ from django.utils.translation import gettext_lazy as _
 class CustomUser(AbstractUser):
     image = models.ImageField(_('image'), upload_to='profiles/', null=True, blank=True)
     is_active = models.BooleanField(_('active'), default=True)
-    amount_of_shopping = models.PositiveIntegerField(_('amount of shopping'), default=0)
     email = models.EmailField(_('email address'), unique=True)
 
     class Meta:
@@ -23,14 +22,14 @@ class CustomUser(AbstractUser):
 
 
 class Customer(CustomUser):
-    # user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    addresses = models.ManyToManyField('Address', verbose_name=_('owner'))
 
     class Meta:
         verbose_name = _("Customer")
         verbose_name_plural = _("Customers")
-    #
-    # def __str__(self):
-    #     return f"{self.username}"
+
+    def __str__(self):
+        return f"{self.username}"
 
 
 class Staff(CustomUser):
@@ -45,7 +44,6 @@ class Staff(CustomUser):
 
 
 class Address(models.Model):
-    owner = models.ForeignKey(Customer, on_delete=models.CASCADE,verbose_name=_('owner'))
     country = TranslatedField(models.CharField(_('country'), max_length=50, null=True, blank=True))
     province = TranslatedField(models.CharField(_('province'), max_length=50, null=True, blank=True))
     city = TranslatedField(models.CharField(_('city'), max_length=50, null=True, blank=True))
