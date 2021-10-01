@@ -17,7 +17,7 @@
                 <th class="bg-primary text-white" scope="row">{{ forloop.counter }}</th>
                 <td>{{ order.start_date }}</td>
                 <td>{{ order.status }}</td>
-                <td>{{ order.address}}</td>
+                <td>{{ order.address.exact_address}}</td>
                 <td><a type="submit" href="" class="btn btn-outline-primary w-75 ml-4 " data-toggle="modal"
                        data-target="#modal-{{ order.id }}">{% translate 'order items' %}</a></td>
             </tr>
@@ -72,7 +72,7 @@
                         </table>
 
                                    <p>
-                     {% translate 'Address' %}:  {{ order.address }}
+                     {% translate 'Address' %}:  {{ order.address.exact_address }}
                                   </p>
 
                     </div>
