@@ -31,7 +31,6 @@ class RequestPaswordResetEmail(generics.GenericAPIView):
     serializer_class = ResetPasswordEmailRequestSerializer
 
     def post(self, request):
-        serializer = self.serializer_class(data=request.data)
         email = request.data['email']
         if Customer.objects.filter(email=email).exists():
             customer = Customer.objects.get(email=email)
@@ -43,7 +42,6 @@ class RequestPaswordResetEmail(generics.GenericAPIView):
                 'token': token
             })
             absurl = 'http://' + current_site + relativeLink
-            print(absurl)
             email_body = 'Hello,\n Use link below to reset your password \n' + absurl
             data = {
                 'email_body': email_body,
