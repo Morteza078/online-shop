@@ -103,68 +103,78 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <label>{% translate 'amount of shopping' %}</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>{{ user.amount_of_shopping }}</p>
-                            </div>
+
                         </div>
                     </div>
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Experience</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>Expert</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Hourly Rate</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>10$/hr</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Total Projects</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>230</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>English Level</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>Expert</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Availability</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>6 months</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label>Your Bio</label><br/>
-                                <p>Your detail description</p>
-                            </div>
-                        </div>
+
+                        <table class="table table-bordered " style="text-align: center">
+                            <thead class="bg-primary text-white">
+                            <tr>
+                                <th>#</th>
+                                <th>{% translate 'Address' %}</th>
+                                <th>{% translate 'Edit' %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for address in customer.addresses.all %}
+                                <tr>
+                                    <th class="bg-primary text-white" scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ address.exact_address }}</td>
+                                    <td><a class="btn btn-outline-primary"
+                                           href="{% url 'customer:remove_address' address.id %}">{% translate 'Remove Address' %}</a>
+                                    </td>
+
+                                </tr>
+                            {% endfor %}
+
+
+                            </tbody>
+                        </table>
+                        <a type="submit" href="" class="btn btn-outline-primary  ml-4 " data-toggle="modal"
+                           data-target="#modal-add-address">{% translate 'Add Address' %}</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script type="text/javascript">
 
-    </script>
+    <!-- large modal -->
+    <div class="modal fade" id="modal-add-address" tabindex="-1" role="dialog" aria-labelledby="basicModal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">{% translate 'Add Address' %}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="{% url 'customer:add_address' %}" class="mt-5">
+                        {% csrf_token %}
+                        <label for="persian_address">{% translate 'persian adress' %}</label>
+                        <input type="text" class="form-control" id="persian_address" name="persian_address"
+                               placeholder="{% translate 'Enter exact address' %}">
+                        <label for="english_address">{% translate 'english adress' %}</label>
+                        <input type="text" class="form-control" id="english_address" name="english_address"
+                               placeholder="{% translate 'Enter exact address' %}">
+                        <input type="hidden" id="customer_id" name="customer_id" value="{{ customer.id }}">
+
+                        <button type="submit"
+                                class="btn btn-primary mt-2">{% translate 'Add address' %}</button>
+
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-outline-danger " data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}
