@@ -1,9 +1,8 @@
 from django.contrib import admin
-from orders.models import OrderItem, Order, OrderHistory, DiscountCode
+from orders.models import OrderItem, Order, DiscountCode
 
 # Register your models here.
 
 admin.site.register(OrderItem)
 admin.site.register(Order)
-admin.site.register(OrderHistory)
 admin.site.register(DiscountCode)
