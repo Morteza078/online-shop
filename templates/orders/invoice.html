@@ -1,0 +1,114 @@
+{% extends 'base/base.html' %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% load static %}
+{% load base_tags %}
+{% block style.css %}
+    <link href="{% static 'orders/css/invoice.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+    <div class="container p-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-3 body-main">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4"><img class="img" alt="Invoce Template"
+                                                       src="http://pngimg.com/uploads/shopping_cart/shopping_cart_PNG59.png"/>
+                            </div>
+                            <div class="col-md-8 text-right">
+                                <h4 style="color: #F81D2D;"><strong>{% translate 'MAKTAB SHARIF_53' %}</strong></h4>
+                                <p>{{ order.address.exact_address }}</p>
+                                <p>{{ order.id }}</p>
+                                <p>{{ order.customer.email }}</p>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <h2>{% translate 'INVOICE' %}</h2>
+                                <h5>04854654101</h5>
+                            </div>
+                        </div>
+                        <br/>
+                        <div>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        <p>{% translate 'Product' %}</p>
+                                    </th>
+                                    <th>
+                                        <p>{% translate 'price' %}</p>
+                                    </th>
+                                    <th>
+                                        <p>{% translate 'quantity' %}</p>
+                                    </th>
+                                    <th>
+                                        <p>{% translate 'total price' %}</p>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in order.items.all %}
+                                    <tr>
+                                        <td class="col-md-4">{{ item.product.name }}</td>
+                                        <td class="col-md-2"><i class="fas fa-rupee-sign"></i> {{ item.product.price }}
+                                        </td>
+                                        <td class="col-md-2"><i class="fas fa-rupee-sign"></i> {{ item.quantity }} </td>
+                                        <td class="col-md-3"><i
+                                                class="fas fa-rupee-sign"></i> {% widthratio item.product.price 1 item.quantity %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                <tr>
+
+                                    <td class="colspan=" 3
+                                    " text-right">
+                                    <h4><strong>{% translate 'Total Amount' %}: </strong></h4>
+                                    <h4><strong>{% translate 'Discount' %}: </strong></h4>
+                                    </td>
+                                    <td>
+                                        <h3><strong><i
+                                                class="fas fa-rupee-sign"> </i>{% total_price order.final_price order.discount %}
+                                        </strong></h3>
+                                        <h3><strong><i class="fas fa-rupee-sign"></i> {{ order.discount }} </strong>
+                                        </h3>
+                                    </td>
+                                     <td>
+                                        <h3><strong><i
+                                                class="fas fa-rupee-sign"> </i>{% translate 'Rial' %}
+                                        </strong></h3>
+                                        <h3><strong><i class="fas fa-rupee-sign"></i> {% translate 'Rial' %} </strong>
+                                        </h3>
+                                    </td>
+                                </tr>
+                                <tr style="color: #F81D2D;">
+                                    <td class="text-right">
+                                        <h4><strong>{% translate 'Payable Amount' %}:</strong></h4>
+                                    </td>
+                                    <td class="text-left">
+                                        <h4><strong><i class="fas fa-rupee-sign"
+                                                       area-hidden="true"></i> {{ order.final_price }}
+                                        </strong></h4>
+                                    </td>
+                                    <td> <h5>{% translate 'Rial' %}</h5></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <div class="col-md-12">
+                                <a href="#"
+                                   class="btn btn-primary cart-btn-transform m-3"
+                                   data-abc="true">{% translate 'Payment' %}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
