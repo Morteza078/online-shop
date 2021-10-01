@@ -1,8 +1,6 @@
 from rest_framework import serializers
-from rest_framework.fields import SerializerMethodField
 
 from products.models import Product, ProductImage
-from parler_rest.fields import TranslatedFieldsField
 
 
 class ImageProductSerializer(serializers.ModelSerializer):
