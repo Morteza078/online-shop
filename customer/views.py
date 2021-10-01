@@ -1,4 +1,6 @@
-from django.contrib.auth import login, authenticate
+import translated_fields
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
@@ -16,7 +18,8 @@ from customer.forms import CustomerLoginForm, CustomerRegisterForm, CustomerChan
     SetResetPassword, EditProfileForm
 
 # Create your views here.
-from customer.models import Customer
+from customer.models import Customer, Address
+from shop import settings
 
 
 class CustomerLoginView(LoginView):
@@ -60,11 +63,17 @@ class CustomerProfileView(LoginRequiredMixin, View):
         })
 
 
-class CustomerLogoutView(LoginRequiredMixin, LogoutView):
-    """
-    Customize Built-in View for Logout Customers
-    """
-    pass
+# class CustomerLogoutView(LoginRequiredMixin, LogoutView):
+#     """
+#     Customize Built-in View for Logout Customers
+#     """
+#     pass
+def customer_logout(request):
+    cart = request.session.get(settings.CART_SESSION_ID)
+    logout(request)
+    if cart:
+        request.session[settings.CART_SESSION_ID] = cart
+    return redirect(reverse('customer:login'))
 
 
 class ChangePasswordView(LoginRequiredMixin, View):
@@ -132,3 +141,24 @@ class EditProfileView(LoginRequiredMixin, View):
         return render(request, "customer/edit_profile.html", {
             'form': form,
         })
+
+
+@login_required
+def add_address(request):
+    if request.method == 'POST':
+        customer = Customer.objects.get(id=request.POST['customer_id'])
+        if request.POST['persian_address'] or request.POST['english_address']:
+            new_address = Address.objects.create(exact_address_fa=request.POST['persian_address'],
+                                                 exact_address_en=request.POST['english_address'])
+            customer.addresses.add(new_address)
+            customer.save()
+            new_address.save()
+    return redirect(reverse("customer:profile"))
+
+
+@login_required
+def remove_address(request, address_id):
+    address = Address.objects.get(id=address_id)
+    customer = Customer.objects.get(id=request.user.id)
+    customer.addresses.remove(address)
+    return redirect(reverse("customer:profile"))
