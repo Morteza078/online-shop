@@ -16,8 +16,8 @@
         {% for order in orders_history %}
             <tr>
                 <th class="bg-primary text-white" scope="row">{{ forloop.counter }}</th>
-                <td>{{ order.order.start_date }}</td>
-                <td>{{ order.order.ordered_date }}</td>
+                <td>{{ order.start_date }}</td>
+                <td>{{ order.ordered_date }}</td>
                 <td>{{ order.discount }}%</td>
                 <td>{{ order.final_price }}</td>
                 <td><a type="submit" href="" class="btn btn-outline-primary w-75 ml-4 " data-toggle="modal"
@@ -54,7 +54,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for order_item in order.order.items.all %}
+                            {% for order_item in order.items.all %}
                                 <tr>
                                     <th class="bg-primary text-white" scope="row">{{ forloop.counter }}</th>
                                     <td>{{ order_item.product.name }}</td>
@@ -74,7 +74,7 @@
                         </table>
 
                                    <p>
-                     {% translate 'Address' %}:  {{ order.order.address }}
+                     {% translate 'Address' %}:  {{ order.address.exact_address }}
                                   </p>
 
                     </div>
