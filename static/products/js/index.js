@@ -1,10 +1,3 @@
-let add_to_cart=''
-if(languege_code==='fa'){
-    add_to_cart='افزودن به سبد خرید'
-}
-else{
-    add_to_cart='Add to cart'
-}
 $(document).ready(function () {
     $.ajax({
         url: 'http://127.0.0.1:8000/en/api/products/',
@@ -32,6 +25,7 @@ $(document).ready(function () {
                     product_description=products[i-1]['description_en']
               }
                 let product_price=products[i-1]['price']
+                 let product_id=products[i-1]['id']
                 let image1=products[i-1]['images'][0]['image']
                 product_block += ` <div class="col mb-5">
                     <div class="card h-100">
@@ -78,13 +72,12 @@ $(document).ready(function () {
                                 </div>
                                 <!-- Product price-->
                                 ${product_price}<br>
-                                    ${product_description}
+                                  
                             </div>
                         </div>
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">${add_to_cart}</a>
-                            </div>
+                           <a href="product_detail/${product_id}"  class="stretched-link"></a>
                         </div>
                     </div>
                 </div>`
@@ -150,6 +143,7 @@ function move_page_next_previous(button) {
               }
 
                 let product_price=products[i-1]['price']
+                let product_id=products[i-1]['id']
                 let image1=products[i-1]['images'][0]['image']
                 product_block += ` <div class="col mb-5">
                     <div class="card h-100">
@@ -196,13 +190,12 @@ function move_page_next_previous(button) {
                                 </div>
                                 <!-- Product price-->
                                 ${product_price}<br>
-                                    ${product_description}
+                                    
                             </div>
                         </div>
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">${add_to_cart}</a>
-                            </div>
+                             <a href="product_detail/${product_id}"  class="stretched-link"></a>
                         </div>
                     </div>
                 </div>`
@@ -268,6 +261,7 @@ function move_page_number(button) {
                     product_description=products[i-1]['description_en']
               }
                 let product_price=products[i-1]['price']
+                    let product_id=products[i-1]['id']
                 let image1=products[i-1]['images'][0]['image']
                 product_block += ` <div class="col mb-5">
                     <div class="card h-100">
@@ -314,13 +308,12 @@ function move_page_number(button) {
                                 </div>
                                 <!-- Product price-->
                                 ${product_price}<br>
-                                    ${product_description}
+                                  
                             </div>
                         </div>
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">${add_to_cart}</a>
-                            </div>
+                         <a href="product_detail/${product_id}"  class="stretched-link"></a>
                         </div>
                     </div>
                 </div>`
@@ -354,3 +347,4 @@ function move_page_number(button) {
         }
     })
 }
+
