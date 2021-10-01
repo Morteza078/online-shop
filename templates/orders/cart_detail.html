@@ -1,0 +1,165 @@
+{% extends 'base/base.html' %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% load static %}
+{% block style.css %}
+    <link href="{% static 'orders/css/cart_detail.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+    <main class="page">
+        {% if not cart.cart %}
+            <div class="empty-cart p-5">
+                <div class="container-fluid mt-100">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Cart</h5>
+                                </div>
+                                <div class="card-body cart">
+                                    <div class="col-sm-12 empty-cart-cls text-center"><img
+                                            src="https://i.imgur.com/dCdflKN.png" width="130" height="130"
+                                            class="img-fluid mb-4 mr-3">
+                                        <h3><strong>{% translate 'Your Cart is Empty' %}</strong></h3>
+                                        <a href="{% url 'products:index' %}"
+                                           class="btn btn-primary cart-btn-transform m-3"
+                                           data-abc="true">{% translate 'shopping' %}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% else %}
+            <section class="shopping-cart dark">
+                <div class="container">
+                    <div class="block-heading">
+                        <h2>MAKTAB SHARIF-53</h2>
+                        <p>Thank you for your trust</p>
+                    </div>
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-8">
+                                {% for item in cart %}
+                                    <div class="items">
+                                        <div class="product">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <a href="{% url 'products:product_detail' item.product.id %}">
+                                                        <img class="img-fluid mx-auto d-block image"
+                                                             src="{{ item.product.images.first.image.url }}"></a>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="info">
+                                                        <div class="row">
+                                                            <div class="col-md-5 product-name">
+                                                                <div class="product-name">
+                                                                    <p>{{ item.product.name }}</p>
+                                                                    {% for attribute in item.product.attributes.all %}
+                                                                        <div class="product-info">
+                                                                            <div>{{ attribute.name }}<span
+                                                                                    class="value">{{ attribute.values }}</span>
+                                                                            </div>
+                                                                            <span>{{ item.product.price }}{% translate 'Rial' %}</span>
+                                                                        </div>
+                                                                    {% endfor %}
+                                                                </div>
+                                                                <a class="btn btn-outline-danger" type="submit"
+                                                                   href="{% url 'orders:cart_remove' item.product.id %}">{% translate 'Remove' %}</a>
+                                                            </div>
+                                                            <div class="col-md-4 quantity">
+                                                                <form method="post"
+                                                                      action="{% url 'orders:cart_add' item.product.id %}">
+                                                                    {% csrf_token %}
+                                                                    <label for="quantity">{% translate 'Quantity' %}:</label>
+                                                                    {{ item.update_count_form.product_count | attr:'type:number'|attr:'id:quantity'| add_class:'form-control quantity-input' }}
+                                                                    {{ item.update_count_form.update }}
+                                                                    <input class="btn btn-outline-success" type="submit"
+                                                                           value="{% translate 'Update' %}">
+                                                                </form>
+                                                            </div>
+                                                            <div class="col-md-3 price">
+                                                                <span>{{ item.total_price }}{% translate 'Rial' %}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="col-md-12 col-lg-4">
+                                <div class="summary">
+                                    <h3>invoice</h3>
+                                    {% if user.is_authenticated %}
+                                        <div class="summary-item row"><span
+                                                class="text col-6">{% translate 'total price' %}:</span><span
+                                                class="price col-6">{{ cart.get_cart_total_price }}</span></div>
+                                        <div class="summary-item row"><span
+                                                class="text col-7"
+                                                id="discount_text">{% translate 'discount' %}: </span>&nbsp<span
+                                                class="price col-4" id="discount"></span></div>
+                                        <div class="summary-item row"><span
+                                                class="text col-6"
+                                                id="final_price_text">{% translate 'final price' %}: </span>&nbsp<span
+                                                class="price col-5" id="final_price"></span></div>
+
+                                        <div class="summary-item row"><span
+                                                class="text col-12" id="error_text" style="color: red"></span></div>
+
+
+                                        <form id="discount_code_form" action="" class="mt-5">
+                                            <label for="discount_code">{% translate 'Discount code' %}</label>
+                                            <input type="text" class="form-control" id="discount_code"
+                                                   name="discount_code"
+                                                   placeholder="{% translate 'Enter discount code' %}">
+                                            <input type="hidden" id="user_id" value="{{ user.id }}">
+                                            <button type="submit"
+                                                    class="btn btn-primary">{% translate 'Apply a discount code' %}</button>
+                                        </form>
+
+                                    {% else %}
+                                        <div class="summary-item"><span
+                                                class="text">{% translate 'total price' %}</span><span
+                                                class="price">{{ cart.get_cart_total_price }}</span></div>
+                                    {% endif %}
+                                    {% if user.is_authenticated %}
+                                        <form method="post" action="{% url 'orders:checkout_order' %}">
+                                            {% csrf_token %}
+                                            <label for="order_address">{% translate 'Address' %}</label>
+                                            <select id="order_address" style="width: 200px" name="order_address">
+                                                {% for address in customer.addresses.all %}
+                                                    <option value="{{ address.id }}">{{ address.exact_address }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <button type="submit"
+                                                    class="btn btn-primary btn-lg btn-block mt-5">{% translate 'Order' %}</button>
+                                        </form>
+
+                                    {% else %}
+                                        <a type="button" href="{% url 'orders:order' %}"
+                                           class="btn btn-primary btn-lg btn-block mt-5">{% translate 'Order' %}</a>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+    </main>
+
+{% endblock %}
+{% block js %}
+    <script src="{% static 'auth/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'orders/js/discount_code.js' %}"></script>
+{% endblock %}
+
+
+
