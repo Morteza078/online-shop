@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'products.apps.ProductsConfig',
     'orders.apps.OrdersConfig',
     'customer.apps.CustomerConfig',
@@ -156,9 +157,11 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'mortezarobatjazi.77@gmail.com'
 EMAIL_HOST_PASSWORD = '*******'
 
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
+CART_SESSION_ID = 'cart'
+
