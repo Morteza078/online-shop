@@ -11,6 +11,6 @@ build/
 .idea/
 *.swp
 *~
-media/*
-shop/settings.py/
+media/products/*
+media/profiles/*
 
