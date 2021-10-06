@@ -34,8 +34,8 @@
             <section class="shopping-cart dark">
                 <div class="container">
                     <div class="block-heading">
-                        <h2>MAKTAB SHARIF-53</h2>
-                        <p>Thank you for your trust</p>
+                        <h2>{% translate "MAKTABSHARIF-53 SHOP" %}</h2>
+                        <h3>{% translate 'Thank you for your trust' %}</h3>
                     </div>
                     <div class="content">
                         <div class="row">
@@ -92,7 +92,7 @@
 
                             <div class="col-md-12 col-lg-4">
                                 <div class="summary">
-                                    <h3>invoice</h3>
+                                    <h3>{% translate 'invoice' %}</h3>
                                     {% if user.is_authenticated %}
                                         <div class="summary-item row"><span
                                                 class="text col-6">{% translate 'total price' %}:</span><span
@@ -117,7 +117,7 @@
                                                    placeholder="{% translate 'Enter discount code' %}">
                                             <input type="hidden" id="user_id" value="{{ user.id }}">
                                             <button type="submit"
-                                                    class="btn btn-primary form-control ">{% translate 'Apply a discount code' %}</button>
+                                                    class="btn btn-outline-primary form-control ">{% translate 'Apply a discount code' %}</button>
                                         </form>
 
                                     {% else %}

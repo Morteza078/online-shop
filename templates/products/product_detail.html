@@ -53,8 +53,12 @@
                         <div class="buttons d-flex flex-row mt-5 gap-3">
                             <form class="form-group" method="post" action="{% url 'orders:cart_add' product.id %}">
                                 {% csrf_token %}
-                                {{ form.product_count | attr:'type:number'|attr:'placeholder:quantity'|attr:'style:text-align: center'|attr:'id:quantity'|add_class:'form-control' }}
-                                <button type="submit" class="btn btn-primary mt-2 ">{% translate 'ADD TO CART' %}</button>
+                                <button class="bg-danger" type="button" onclick="decrement()">-</button>
+                                {{ form.product_count | attr:'type:number'|attr:'style:text-align: center'|attr:'id:quantity'|attr:'min=0' }}
+                                <button class="bg-success" type="button" onclick="increment()">+</button>
+                                        <button type="submit"
+                                                class="form-control w-50 btn btn-primary mt-2 ">{% translate 'ADD TO CART' %}</button>
+
                             </form>
                         </div>
 
@@ -68,3 +72,4 @@
 {% block js %}
     <script src="{% static 'products/js/product_detail.js' %}"></script>
 {% endblock %}
+

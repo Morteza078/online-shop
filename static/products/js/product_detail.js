@@ -6,3 +6,11 @@ main_prodcut_image.src = element.src;
 
 }
 
+
+ function increment() {
+      document.getElementById('quantity').stepUp();
+   }
+   function decrement() {
+      document.getElementById('quantity').stepDown();
+   }
+
