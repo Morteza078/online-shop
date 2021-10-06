@@ -1,31 +1,39 @@
 {% extends 'base/base.html' %}
 {% load i18n %}
 {% block content %}
-    <table class="table table-bordered " style="text-align: center">
-        <thead class="bg-primary text-white">
-        <tr>
-            <th>#</th>
-            <th>{% translate 'Start date' %}</th>
-            <th>{% translate 'status' %}</th>
-            <th>{% translate 'Address' %}</th>
-            <th>{% translate 'More details' %}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for order in recent_orders %}
+    <div class="row p-5">
+        <table class="table table-bordered " style="text-align: center">
+            <thead class="bg-primary text-white">
             <tr>
-                <th class="bg-primary text-white" scope="row">{{ forloop.counter }}</th>
-                <td>{{ order.start_date }}</td>
-                <td>{{ order.status }}</td>
-                <td>{{ order.address.exact_address}}</td>
-                <td><a type="submit" href="" class="btn btn-outline-primary w-75 ml-4 " data-toggle="modal"
-                       data-target="#modal-{{ order.id }}">{% translate 'order items' %}</a></td>
+                <th>#</th>
+                <th>{% translate 'Start date' %}</th>
+                <th>{% translate 'status' %}</th>
+                <th>{% translate 'Actions' %}</th>
+                <th>{% translate 'Address' %}</th>
+                <th>{% translate 'More details' %}</th>
             </tr>
-        {% endfor %}
+            </thead>
+            <tbody>
+            {% for order in recent_orders %}
+                <tr>
+                    <th class="bg-primary text-white" scope="row">{{ forloop.counter }}</th>
+                    <td>{{ order.start_date }}</td>
+                    <td>{{ order.get_status_display }}</td>
+                    {% if order.status == '0' %}
+                        <td><a type="submit" href="{% url 'orders:invoice' order.id %}"
+                               class="btn btn-outline-primary w-75 ">{% translate 'countinue' %}</a></td>
+                    {% else %}
+                        <td><span></span></td>
+                    {% endif %}
+                    <td>{{ order.address.exact_address }}</td>
+                    <td><a type="submit" href="" class="btn btn-outline-primary w-75 ml-4 " data-toggle="modal"
+                           data-target="#modal-{{ order.id }}">{% translate 'order items' %}</a></td>
+                </tr>
+            {% endfor %}
 
-        </tbody>
-    </table>
-
+            </tbody>
+        </table>
+    </div>
 
     {% for order in recent_orders %}
         <!-- large modal -->
@@ -58,12 +66,13 @@
                                     <td>{{ order_item.product.name }}</td>
                                     <td>{{ order_item.product.price }}</td>
                                     <td>{{ order_item.quantity }}</td>
-                                    <td><img class="rounded" width="150" height="70" src="{{ order_item.product.images.first.image.url }}"></td>
-                                 {% for attribute in order_item.product.attributes.all %}
-                                    <td>
-                                    {{ attribute.name }}:{{ attribute.values }}<br>
-                                    </td>
-                                 {% endfor %}
+                                    <td><img class="rounded" width="150" height="70"
+                                             src="{{ order_item.product.images.first.image.url }}"></td>
+                                    {% for attribute in order_item.product.attributes.all %}
+                                        <td>
+                                            {{ attribute.name }}:{{ attribute.values }}<br>
+                                        </td>
+                                    {% endfor %}
                                 </tr>
 
                             {% endfor %}
@@ -71,9 +80,9 @@
                             </tbody>
                         </table>
 
-                                   <p>
-                     {% translate 'Address' %}:  {{ order.address.exact_address }}
-                                  </p>
+                        <p>
+                            {% translate 'Address' %}: {{ order.address.exact_address }}
+                        </p>
 
                     </div>
                     <div class="modal-footer">

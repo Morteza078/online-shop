@@ -12,7 +12,7 @@
 {% block drop-drown %}{% endblock %}
 {% block content %}
     <div class=" emp-profile" style="height: 300px">
-        <form id="edit_profile_form" enctype="multipart/form-data" method="post">
+        <form id="edit_profile_form" enctype="multipart/form-data" method="post" class="form-group">
             {% csrf_token %}
             <div class="row">
                 <div class="col-md-3">
@@ -43,7 +43,7 @@
                                         <label>{% translate 'username' %}</label>
                                     </div>
                                     <div class="col-md-9 w-75">
-                                        {{ form.username }}
+                                        {{ form.username | add_class:'form-contorol' }}
                                          {% if form.username.errors %}
                                              <div class="errors">
                                                  {% for error in form.username.errors %}
@@ -61,7 +61,7 @@
                                         <label>{% translate 'first name' %}</label>
                                     </div>
                                     <div class="col-md-9 w-75">
-                                        {{ form.first_name }}
+                                        {{ form.first_name | add_class:'form-contorol' }}
                                     </div>
                                 </div>
                                 <div class="row m-1">
@@ -69,7 +69,7 @@
                                         <label>{% translate 'last name' %}</label>
                                     </div>
                                     <div class="col-md-9 w-75">
-                                        {{ form.last_name }}
+                                        {{ form.last_name | add_class:'form-contorol' }}
                                     </div>
                                 </div>
                                 <div class="row m-1">
@@ -92,7 +92,7 @@
 
                                 <div class="row m-1">
                                     <div class="col-md-3">
-                                        <button type="submit" class="btn  btn-primary">
+                                        <button type="submit" class="btn  btn-primary form-control mr-5">
                                             {% trans 'save' %}
                                         </button>
                                     </div>
@@ -111,7 +111,6 @@
                 <div class="errors">
                     {% for error in form.non_field_errors %}
                         <span style="font-size: small;color: red">
-                          lfldsflsdkf;skf;skd;skd;skd;sakd;dksk;dk
                            </span>
                     {% endfor %}
                 </div>

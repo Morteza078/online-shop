@@ -33,12 +33,15 @@ class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, verbose_name=_('costumer'))
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField(_("order date"), default=pytz.utc.localize(datetime.datetime.now() + datetime.timedelta(days=2)))
+    READY_TO_SEND = '0'
+    SENDING = '1'
+    DELIVERED = '2'
     STATUS = (
-        (_("ready to send"), _("ready to send")),
-        (_("sending"), _("sending")),
-        (_("delivered"), _("delivered")),
+        (READY_TO_SEND, _("ready to send")),
+        (SENDING, _("sending")),
+        (DELIVERED, _("delivered")),
     )
-    status = models.CharField(_("status"), max_length=50, choices=STATUS, default=_("ready to send"))
+    status = models.CharField(_("status"), max_length=50, choices=STATUS, default=READY_TO_SEND)
     discount = models.IntegerField(_("discount"), validators=[MinValueValidator(0), MaxValueValidator(100)], default=0)
     address = models.ForeignKey(Address, on_delete=models.DO_NOTHING, verbose_name=_('address'))
     final_price = models.PositiveIntegerField(_("final price"))

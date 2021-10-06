@@ -1,6 +1,7 @@
 {% extends 'base/base.html' %}
 {% load i18n %}
 {% block content %}
+    <div class="row p-5">
     <table class="table table-bordered " style="text-align: center">
         <thead class="bg-primary text-white">
         <tr>
@@ -28,7 +29,7 @@
         </tbody>
     </table>
 
-
+</div>
     {% for order in orders_history %}
         <!-- large modal -->
         <div class="modal fade" id="modal-{{ order.id }}" tabindex="-1" role="dialog" aria-labelledby="basicModal"
