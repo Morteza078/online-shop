@@ -19,7 +19,7 @@
                     <th class="bg-primary text-white" scope="row">{{ forloop.counter }}</th>
                     <td>{{ order.start_date }}</td>
                     <td>{{ order.get_status_display }}</td>
-                    {% if order.status == '0' %}
+                    {% if order.status == 0 %}
                         <td><a type="submit" href="{% url 'orders:invoice' order.id %}"
                                class="btn btn-outline-primary w-75 ">{% translate 'countinue' %}</a></td>
                     {% else %}

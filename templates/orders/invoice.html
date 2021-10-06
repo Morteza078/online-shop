@@ -64,8 +64,7 @@
                                 {% endfor %}
                                 <tr>
 
-                                    <td class="colspan=" 3
-                                    " text-right">
+                                    <td class="colspan=" >
                                     <h4><strong>{% translate 'Total Amount' %}: </strong></h4>
                                     <h4><strong>{% translate 'Discount' %}: </strong></h4>
                                     </td>
@@ -73,14 +72,14 @@
                                         <h3><strong><i
                                                 class="fas fa-rupee-sign"> </i>{% total_price order.final_price order.discount %}
                                         </strong></h3>
-                                        <h3><strong><i class="fas fa-rupee-sign"></i> {{ order.discount }} </strong>
+                                        <h3><strong><i class="fas fa-rupee-sign"></i> {{ order.discount }}%</strong>
                                         </h3>
                                     </td>
                                      <td>
                                         <h3><strong><i
                                                 class="fas fa-rupee-sign"> </i>{% translate 'Rial' %}
                                         </strong></h3>
-                                        <h3><strong><i class="fas fa-rupee-sign"></i> {% translate 'Rial' %} </strong>
+                                        <h3><strong><i class="fas fa-rupee-sign"></i> {% translate '' %} </strong>
                                         </h3>
                                     </td>
                                 </tr>
