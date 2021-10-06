@@ -24,7 +24,7 @@ class DiscountCodeView(generics.GenericAPIView):
             now = pytz.utc.localize(datetime.now())
             if code == str(code_user) and now < code_user.valid_to:
                 final_price = cart.get_cart_total_price(code_user.discount)
-                request.session['discount']=code_user.discount
+                request.session['discount_code'] = code_user.id
                 data = {
                     'final_price': final_price,
                     'discount': code_user.discount
