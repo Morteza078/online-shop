@@ -17,3 +17,10 @@ body {
 .close-detail {
    margin: inherit !important;
 }
+
+
+.dropdown-menu.show {
+    right: 0;
+    left: auto;
+    text-align: center;
+}

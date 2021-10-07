@@ -46,7 +46,7 @@
                             <div id="{{ product.name }}" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <img src="/media/header_site.jpg" class="d-block w-100" alt="...">
+                                        <img src="{{ product.images.first.image.url }}" class="d-block w-100" alt="...">
                                     </div>
                                     {% for product_image in product.images.all %}
                                         <div class="carousel-item">
@@ -80,9 +80,7 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                                            href="#">{% translate 'Add to cart' %}</a>
-                                </div>
+                               <a href="{% url 'products:product_detail' product.id %}"  class="stretched-link"></a>
                             </div>
                         </div>
                     </div>
