@@ -45,7 +45,7 @@ class ProductImage(models.Model):
 
 class Product(models.Model):
     name = TranslatedField(models.CharField(_('name'), max_length=250))
-    description = TranslatedField(models.TextField(_('description')))
+    description = TranslatedField(models.TextField(_('description'),null=True,blank=True))
     price = models.FloatField(_('price'))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -53,7 +53,7 @@ class Product(models.Model):
     number_of_products = models.PositiveIntegerField(_('number of products'), default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name=_('category'),
                                  related_name='products')
-    attributes = models.ManyToManyField(Attribute, verbose_name=_('Attributes'))
+    attributes = models.ManyToManyField(Attribute, verbose_name=_('Attributes'),null=True,blank=True)
 
     class Meta:
         verbose_name = _("Product")

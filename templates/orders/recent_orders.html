@@ -19,7 +19,7 @@
                     <th class="bg-primary text-white" scope="row">{{ forloop.counter }}</th>
                     <td>{{ order.start_date }}</td>
                     <td>{{ order.get_status_display }}</td>
-                    {% if order.status == 0 %}
+                    {% if order.status == '0' %}
                         <td><a type="submit" href="{% url 'orders:invoice' order.id %}"
                                class="btn btn-outline-primary w-75 ">{% translate 'countinue' %}</a></td>
                     {% else %}
@@ -44,7 +44,7 @@
                     <div class="modal-header">
                         <h4 class="modal-title" id="myModalLabel">{% translate 'Order details' %}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true"></span>
                         </button>
                     </div>
                     <div class="modal-body">
@@ -64,7 +64,7 @@
                                 <tr>
                                     <th class="bg-primary text-white" scope="row">{{ forloop.counter }}</th>
                                     <td>{{ order_item.product.name }}</td>
-                                    <td>{{ order_item.product.price }}</td>
+                                    <td>{{ order_item.product.price }} {% translate 'Rial' %}</td>
                                     <td>{{ order_item.quantity }}</td>
                                     <td><img class="rounded" width="150" height="70"
                                              src="{{ order_item.product.images.first.image.url }}"></td>
@@ -87,7 +87,7 @@
                     </div>
                     <div class="modal-footer">
 
-                        <button type="button" class="btn btn-outline-danger " data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-outline-danger " data-dismiss="modal">{% translate 'Close' %}</button>
                     </div>
                 </div>
             </div>

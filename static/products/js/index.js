@@ -1,3 +1,9 @@
+if (languege_code==='fa'){
+  var rial='ریال'
+}
+else {
+    var rial='Rial'
+}
 $(document).ready(function () {
     $.ajax({
         url: 'http://127.0.0.1:8000/en/api/products/',
@@ -32,13 +38,13 @@ $(document).ready(function () {
                    <div id="${product_name}" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                 <!-- Product images--> 
-                                    <div class="carousel-item active">
+                                    <div class="carousel-item active p-5">
                                         <img src="${image1}" class="d-block w-100" alt="...">
                                     </div>`
                 for (let j = 2; j <= products[i-1]['images'].length; j++){
                  let image= products[i-1]['images'][j-1]['image']
                     // product_block+= "<div class='carousel-item'>"+'<img src=${image} class="d-block w-100" alt="...">'+"</div>"
-                   product_block+=` <div class="carousel-item">
+                   product_block+=` <div class="carousel-item p-5">
                                             <img src="${image}" class="d-block w-100" alt="...">
                                         </div>`
                 }
@@ -71,7 +77,7 @@ $(document).ready(function () {
                                     <div class="bi-star-fill"></div>
                                 </div>
                                 <!-- Product price-->
-                                ${product_price}<br>
+                                ${product_price}${rial}<br>
                                   
                             </div>
                         </div>
@@ -150,13 +156,13 @@ function move_page_next_previous(button) {
                    <div id="${product_name}" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                 <!-- Product images--> 
-                                    <div class="carousel-item active">
+                                    <div class="carousel-item active p-5">
                                         <img src="${image1}" class="d-block w-100" alt="...">
                                     </div>`
                 for (let j = 2; j <= products[i-1]['images'].length; j++){
                  let image= products[i-1]['images'][j-1]['image']
                     // product_block+= "<div class='carousel-item'>"+'<img src=${image} class="d-block w-100" alt="...">'+"</div>"
-                   product_block+=` <div class="carousel-item">
+                   product_block+=` <div class="carousel-item p-5">
                                             <img src="${image}" class="d-block w-100" alt="...">
                                         </div>`
                 }
@@ -189,7 +195,7 @@ function move_page_next_previous(button) {
                                     <div class="bi-star-fill"></div>
                                 </div>
                                 <!-- Product price-->
-                                ${product_price}<br>
+                                ${product_price}${rial}<br>
                                     
                             </div>
                         </div>
@@ -268,13 +274,13 @@ function move_page_number(button) {
                    <div id="${product_name}" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                 <!-- Product images--> 
-                                    <div class="carousel-item active">
+                                    <div class="carousel-item active p-5">
                                         <img src="${image1}" class="d-block w-100" alt="...">
                                     </div>`
                 for (let j = 2; j <= products[i-1]['images'].length; j++){
                  let image= products[i-1]['images'][j-1]['image']
                     // product_block+= "<div class='carousel-item'>"+'<img src=${image} class="d-block w-100" alt="...">'+"</div>"
-                   product_block+=` <div class="carousel-item">
+                   product_block+=` <div class="carousel-item p-5">
                                             <img src="${image}" class="d-block w-100" alt="...">
                                         </div>`
                 }
@@ -307,7 +313,7 @@ function move_page_number(button) {
                                     <div class="bi-star-fill"></div>
                                 </div>
                                 <!-- Product price-->
-                                ${product_price}<br>
+                                ${product_price}${rial}<br>
                                   
                             </div>
                         </div>

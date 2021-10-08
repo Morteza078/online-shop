@@ -41,15 +41,15 @@
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 {% for product in category.products.all %}
                     <div class="col mb-5">
-                        <div class="card h-100">
+                        <div class="card h-100 ">
                             <!-- Product images-->
-                            <div id="{{ product.name }}" class="carousel slide" data-bs-ride="carousel">
+                            <div id="{{ product.name }}" class="carousel slide " data-bs-ride="carousel">
                                 <div class="carousel-inner">
-                                    <div class="carousel-item active">
+                                    <div class="carousel-item active p-5">
                                         <img src="{{ product.images.first.image.url }}" class="d-block w-100" alt="...">
                                     </div>
                                     {% for product_image in product.images.all %}
-                                        <div class="carousel-item">
+                                        <div class="carousel-item p-5">
                                             <img src="{{ product_image.image.url }}" class="d-block w-100" alt="...">
                                         </div>
                                     {% endfor %}
@@ -74,8 +74,8 @@
                                     <!-- Product name-->
                                     <h5 class="fw-bolder">{{ product.name }}</h5>
                                     <!-- Product price-->
-                                    {{ product.price }}<br>
-                                    {{ product.description }}
+                                    {{ product.price }} {% translate 'Rial' %}<br>
+
                                 </div>
                             </div>
                             <!-- Product actions-->

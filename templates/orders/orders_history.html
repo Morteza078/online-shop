@@ -20,7 +20,7 @@
                 <td>{{ order.start_date }}</td>
                 <td>{{ order.ordered_date }}</td>
                 <td>{{ order.discount }}%</td>
-                <td>{{ order.final_price }}</td>
+                <td>{{ order.final_price }} {% translate 'Rial' %}</td>
                 <td><a type="submit" href="" class="btn btn-outline-primary w-75 ml-4 " data-toggle="modal"
                        data-target="#modal-{{ order.id }}">{% translate 'order items' %}</a></td>
             </tr>
@@ -39,7 +39,7 @@
                     <div class="modal-header">
                         <h4 class="modal-title" id="myModalLabel">{% translate 'Order details' %}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true"></span>
                         </button>
                     </div>
                     <div class="modal-body">
@@ -59,7 +59,7 @@
                                 <tr>
                                     <th class="bg-primary text-white" scope="row">{{ forloop.counter }}</th>
                                     <td>{{ order_item.product.name }}</td>
-                                    <td>{{ order_item.product.price }}</td>
+                                    <td>{{ order_item.product.price }} {% translate 'Rial' %}</td>
                                     <td>{{ order_item.quantity }}</td>
                                     <td><img class="rounded" width="150" height="70" src="{{ order_item.product.images.first.image.url }}"></td>
                                  {% for attribute in order_item.product.attributes.all %}

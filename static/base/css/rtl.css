@@ -1,4 +1,8 @@
+@import url(fonts.css);
+
+
 body {
+     font-family: "Yekan", "Vazir", "Roboto","Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif!important;
     direction: rtl !important;
     text-align: right !important;
 }
@@ -15,7 +19,7 @@ body {
 }
 
 .close-detail {
-   margin: inherit !important;
+    margin: inherit !important;
 }
 
 
