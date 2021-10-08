@@ -19,7 +19,7 @@ Bilingual Online Shopping System Project with Python &amp; Django Framework &amp
 ## Tools:
 1. Back-End: Python, Django, REST API
 2. Data Base: PostgreSQL
-3. Front-End: HTML5, CSS3, JavaScript, Bootstrap4, jQuery, AJAX
+3. Front-End: HTML5, CSS3, JavaScript, Bootstrap5, jQuery, AJAX
 
 ## How to Run?
 1. Clone the Project
