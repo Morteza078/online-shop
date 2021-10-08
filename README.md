@@ -27,7 +27,7 @@ Bilingual Online Shopping System Project with Python &amp; Django Framework &amp
 2. Create a Virtual Environment
 * `py -3 -m venv venv`
 3. Activate the Interpreter of the Virtual Environment
-* Windows: `venv\Script\active`
+* Windows: `venv\Scripts\activate`
 * Linux: `source venv/bin/active`
 4. Create a database called `shop` on your system
 5. In settings.py, set up the database as follows:
