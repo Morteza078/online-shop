@@ -24,12 +24,14 @@ Bilingual Online Shopping System Project with Python &amp; Django Framework &amp
 ## How to Run?
 1. Clone the Project
 * `git clone https://github.com/Morteza078/online-shop.git`
-2. Create a Virtual Environment
+2.Cd to online-shop folder and Create a Virtual Environment
+* `cd online-shop`
 * `py -3 -m venv venv`
 3. Activate the Interpreter of the Virtual Environment
 * Windows: `venv\Scripts\activate`
+* windows in git bash:`source venv/Scripts/activate`
 * Linux: `source venv/bin/active`
-4. Create a database called `shop` on your system
+4. Create a database called `shop` on your system and import shop.pgsql 
 5. In settings.py, set up the database as follows:
 * `DATABASES = {
     'default': {
