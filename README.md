@@ -31,7 +31,7 @@ Bilingual Online Shopping System Project with Python &amp; Django Framework &amp
 * Windows: `venv\Scripts\activate`
 * windows in git bash:`source venv/Scripts/activate`
 * Linux: `source venv/bin/active`
-4. Create a database called `shop` on your system
+4. Create a database called `shop` on your system and import shop.pgsql 
 5. In settings.py, set up the database as follows:
 * `DATABASES = {
     'default': {
