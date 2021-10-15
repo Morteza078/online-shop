@@ -24,7 +24,7 @@ Bilingual Online Shopping System Project with Python &amp; Django Framework &amp
 ## How to Run?
 1. Clone the Project
 * `git clone https://github.com/Morteza078/online-shop.git`
-2.Cd to online-shop folder and Create a Virtual Environment
+2. Cd to online-shop folder and Create a Virtual Environment
 * `cd online-shop`
 * `py -3 -m venv venv`
 3. Activate the Interpreter of the Virtual Environment
